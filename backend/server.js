@@ -1,0 +1,17 @@
+import express from 'express';
+import cors from 'cors';
+import { router as authRouter } from './routes/auth.js';
+import telemetryRouter from './routes/telemetry.js';
+import alertsRouter from './routes/alerts.js';
+import maintenanceRouter from './routes/maintenance.js';
+import thresholdsRouter from './routes/thresholds.js';
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.get('/', (req, res) => res.json({ name: 'Coolant IoT SCADA API', version: '3.4.1-rc2', status: 'ONLINE' }));
+app.use('/api/auth', authRouter);
+app.use('/api/telemetry', telemetryRouter);
+app.use('/api/alerts', alertsRouter);
+app.use('/api/maintenance', maintenanceRouter);
+app.use('/api/thresholds', thresholdsRouter);
+app.listen(3001, '0.0.0.0', () => console.log('🏭 Coolant IoT Backend running at http://localhost:3001'));
